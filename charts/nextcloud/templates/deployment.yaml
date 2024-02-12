@@ -80,54 +80,6 @@ spec:
             - name: http
               containerPort: {{ .Values.nextcloud.containerPort }}
               protocol: TCP
-          {{- with .Values.livenessProbe }}
-          {{- if .enabled }}
-          livenessProbe:
-            httpGet:
-              path: /status.php
-              port:  {{ $.Values.nextcloud.containerPort }}
-              httpHeaders:
-              - name: Host
-                value: {{ $.Values.nextcloud.host | quote }}
-            initialDelaySeconds: {{ .initialDelaySeconds }}
-            periodSeconds: {{ .periodSeconds }}
-            timeoutSeconds: {{ .timeoutSeconds }}
-            successThreshold: {{ .successThreshold }}
-            failureThreshold: {{ .failureThreshold }}
-          {{- end }}
-          {{- end }}
-          {{- with .Values.readinessProbe }}
-          {{- if .enabled }}
-          readinessProbe:
-            httpGet:
-              path: /status.php
-              port:  {{ $.Values.nextcloud.containerPort }}
-              httpHeaders:
-              - name: Host
-                value: {{ $.Values.nextcloud.host | quote }}
-            initialDelaySeconds: {{ .initialDelaySeconds }}
-            periodSeconds: {{ .periodSeconds }}
-            timeoutSeconds: {{ .timeoutSeconds }}
-            successThreshold: {{ .successThreshold }}
-            failureThreshold: {{ .failureThreshold }}
-          {{- end }}
-          {{- end }}
-          {{- with .Values.startupProbe }}
-          {{- if .enabled }}
-          startupProbe:
-            httpGet:
-              path: /status.php
-              port:  {{ $.Values.nextcloud.containerPort }}
-              httpHeaders:
-              - name: Host
-                value: {{ $.Values.nextcloud.host | quote }}
-            initialDelaySeconds: {{ .initialDelaySeconds }}
-            periodSeconds: {{ .periodSeconds }}
-            timeoutSeconds: {{ .timeoutSeconds }}
-            successThreshold: {{ .successThreshold }}
-            failureThreshold: {{ .failureThreshold }}
-          {{- end }}
-          {{- end }}
           {{- end }}{{/* end-if not nginx.enabled */}}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
